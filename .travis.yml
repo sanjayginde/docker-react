@@ -1,0 +1,17 @@
+language: generic
+
+# Need Docker running
+sudo: required # Need super user to run docker
+services:
+  - docker
+
+# Build using Dockerfile.dev
+before_install:
+  - docker build -t sanjayginde/docker-react -f Dockerfile.dev .
+
+# Run test suite
+script:
+  - docker run -e CI=true sanjayginde/docker-react npm run test -- --coverage
+
+
+# Deploy code to AWS
